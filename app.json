@@ -8,7 +8,8 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ideax.canteena"
     },
     "android": {
       "adaptiveIcon": {
@@ -17,6 +18,7 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
+      "package": "com.ideax.canteena",
       "predictiveBackGestureEnabled": false
     },
     "web": {
@@ -24,6 +26,12 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "56c4fd43-7d9f-4a1c-bd5c-62707525bbc1"
+      }
+    }
   }
 }
