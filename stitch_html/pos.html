@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Canteena PoS | Point of Sale</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline": "#8e706a",
+                    "surface-variant": "#d3e4fe",
+                    "primary": "#b3290f",
+                    "on-background": "#0b1c30",
+                    "background": "#f8f9ff",
+                    "on-surface": "#0b1c30",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#ffb4a5",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#b3290f",
+                    "tertiary-fixed": "#dee1ff",
+                    "on-secondary-fixed": "#1a1c1e",
+                    "secondary-fixed-dim": "#c6c6c9",
+                    "surface": "#f8f9ff",
+                    "tertiary-fixed-dim": "#bac3ff",
+                    "surface-dim": "#cbdbf5",
+                    "surface-container-high": "#dce9ff",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-secondary-container": "#636467",
+                    "on-tertiary-container": "#001f85",
+                    "on-surface-variant": "#5a413b",
+                    "secondary": "#5d5e61",
+                    "on-tertiary-fixed-variant": "#0031c4",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#213145",
+                    "surface-container-low": "#eff4ff",
+                    "primary-fixed": "#ffdad3",
+                    "on-primary-container": "#5f0a00",
+                    "secondary-container": "#e2e2e5",
+                    "tertiary": "#2e4edc",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-container": "#768cff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#454749",
+                    "secondary-fixed": "#e2e2e5",
+                    "surface-container": "#e5eeff",
+                    "primary-container": "#ff5f40",
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#e3beb7",
+                    "surface-bright": "#f8f9ff",
+                    "on-primary-fixed-variant": "#8e1500",
+                    "primary-fixed-dim": "#ffb4a5",
+                    "on-tertiary-fixed": "#001159",
+                    "on-primary-fixed": "#3e0400"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "container-padding": "16px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "xl": "32px",
+                    "gutter": "12px",
+                    "base": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "headline-sm": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "label-md": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "title-lg": ["Hanken Grotesk"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e2e5;
+            border-radius: 10px;
+        }
+        .receipt-print {
+            animation: slideDown 0.5s ease-out forwards;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .cart-item-enter {
+            animation: scaleIn 0.2s ease-out forwards;
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md overflow-hidden h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-dim shadow-sm flex items-center justify-between px-container-padding h-16 w-full">
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-primary dark:text-inverse-primary hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 duration-150">menu</button>
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Canteena Admin</span>
+</div>
+<div class="hidden md:flex items-center gap-lg">
+<nav class="flex gap-md">
+<a class="text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors px-3 py-1 rounded-lg" href="#">Dashboard</a>
+<a class="text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors px-3 py-1 rounded-lg" href="#">Menu</a>
+<a class="text-primary font-bold font-body-md hover:bg-surface-container-high transition-colors px-3 py-1 rounded-lg" href="#">PoS</a>
+<a class="text-on-surface-variant font-body-md hover:bg-surface-container-high transition-colors px-3 py-1 rounded-lg" href="#">Reports</a>
+</nav>
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a young operations manager wearing a modern corporate uniform, set against a clean, bright cafeteria office background with warm lighting and a soft-focus professional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxSlnYI9wp92HtlTRGOSTNt7f-yYN3Z_DV5FXsu-nDY4stFnUMIzvllyRbC7Zx6rqK-tihb4j0cViEtfHFldYEJLgRXEVyko9KF4Hq24t6xiiVd1cw4TayMZdX6XH0Twng-JRWvE_n0A2nLfwolejC0mRVbkizC0YnzGT7WlGdEfv-_cA5Ycoh1ZPu6U5RNQ8KTB7NS5iPHZWEkOLPjBEq5gLHWCkzvXOQpjAZKSGL3TRJIqVtmBzdDg"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 mt-16 flex flex-col md:flex-row overflow-hidden">
+<!-- Left: Product Section -->
+<section class="flex-1 flex flex-col overflow-hidden bg-surface-container-lowest">
+<!-- Category Filters -->
+<div class="px-md py-sm flex gap-sm overflow-x-auto no-scrollbar border-b border-outline-variant/30 bg-surface-container-low">
+<button class="category-btn active px-lg py-2 rounded-full bg-primary-container text-on-primary-container font-headline-sm text-sm whitespace-nowrap transition-all duration-200" onclick="filterCategory('all')">All Items</button>
+<button class="category-btn px-lg py-2 rounded-full bg-surface-container-high text-on-surface-variant font-headline-sm text-sm whitespace-nowrap transition-all hover:bg-primary-container/20" onclick="filterCategory('meals')">Meals</button>
+<button class="category-btn px-lg py-2 rounded-full bg-surface-container-high text-on-surface-variant font-headline-sm text-sm whitespace-nowrap transition-all hover:bg-primary-container/20" onclick="filterCategory('snacks')">Snacks</button>
+<button class="category-btn px-lg py-2 rounded-full bg-surface-container-high text-on-surface-variant font-headline-sm text-sm whitespace-nowrap transition-all hover:bg-primary-container/20" onclick="filterCategory('drinks')">Drinks</button>
+<button class="category-btn px-lg py-2 rounded-full bg-surface-container-high text-on-surface-variant font-headline-sm text-sm whitespace-nowrap transition-all hover:bg-primary-container/20" onclick="filterCategory('desserts')">Desserts</button>
+</div>
+<!-- Product Grid -->
+<div class="flex-1 overflow-y-auto p-md custom-scrollbar">
+<div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-md" id="product-grid">
+<!-- Product Cards will be injected here by JS -->
+</div>
+</div>
+</section>
+<!-- Right: Cart & Payment Summary -->
+<aside class="w-full md:w-96 bg-surface-container border-l border-outline-variant/30 flex flex-col shadow-xl z-10">
+<div class="p-md border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-high">
+<h2 class="font-headline-sm text-primary flex items-center gap-sm">
+<span class="material-symbols-outlined">shopping_cart</span>
+                    Current Order
+                </h2>
+<button class="text-error font-label-md hover:bg-error-container/50 px-2 py-1 rounded" onclick="clearCart()">CLEAR ALL</button>
+</div>
+<!-- Cart Items -->
+<div class="flex-1 overflow-y-auto p-md space-y-sm custom-scrollbar bg-surface-container-low" id="cart-items">
+<div class="flex flex-col items-center justify-center h-full text-on-surface-variant/50 gap-sm">
+<span class="material-symbols-outlined text-4xl">inventory_2</span>
+<p class="font-body-md italic">No items added yet</p>
+</div>
+</div>
+<!-- Payment Details -->
+<div class="p-md bg-surface-container-lowest shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<div class="space-y-sm mb-md">
+<div class="flex justify-between font-body-md text-on-surface-variant">
+<span>Subtotal</span>
+<span class="font-label-md" id="subtotal">$0.00</span>
+</div>
+<div class="flex justify-between font-body-md text-on-surface-variant">
+<span>Tax (5%)</span>
+<span class="font-label-md" id="tax">$0.00</span>
+</div>
+<div class="flex justify-between font-display-lg text-primary">
+<span>Total</span>
+<span id="total">$0.00</span>
+</div>
+</div>
+<!-- Payment Method Toggle -->
+<div class="mb-md">
+<p class="font-label-md text-secondary mb-2">PAYMENT METHOD</p>
+<div class="flex bg-secondary-container rounded-lg p-1">
+<button class="flex-1 py-2 text-sm font-bold rounded-md bg-surface-container-lowest text-primary shadow-sm transition-all" id="btn-pay-standard" onclick="togglePayment('standard')">Cash / Digital</button>
+<button class="flex-1 py-2 text-sm font-bold rounded-md text-on-secondary-container transition-all" id="btn-pay-coupon" onclick="togglePayment('coupon')">Coupon</button>
+</div>
+</div>
+<!-- Coupon Entry (Hidden by default) -->
+<div class="hidden space-y-sm mb-md cart-item-enter" id="coupon-section">
+<div class="flex gap-sm">
+<input class="flex-1 bg-surface-container-low border-none rounded-lg font-label-md focus:ring-2 focus:ring-primary px-3 py-2" placeholder="Enter Coupon Code" type="text"/>
+<button class="bg-primary-container text-on-primary-container px-3 rounded-lg material-symbols-outlined hover:scale-105 transition-transform active:scale-95">check</button>
+</div>
+<button class="w-full border-2 border-dashed border-primary text-primary py-3 rounded-xl flex items-center justify-center gap-sm font-bold hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined">qr_code_scanner</span>
+                        Scan Coupon
+                    </button>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-xl font-headline-sm flex items-center justify-center gap-md hover:brightness-110 active:scale-95 transition-all shadow-lg" onclick="placeOrder()">
+<span class="material-symbols-outlined">receipt_long</span>
+                    Place Order
+                </button>
+</div>
+</aside>
+</main>
+<!-- Bottom Nav (Mobile Only) -->
+<footer class="md:hidden bg-surface/80 backdrop-blur-md fixed bottom-0 w-full h-16 border-t border-outline-variant/30 flex justify-around items-center px-2 z-50 rounded-t-xl shadow-[0_-4px_12px_rgba(179,41,15,0.08)]">
+<div class="flex flex-col items-center justify-center text-secondary">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-label-md uppercase">Dash</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="text-[10px] font-label-md uppercase">PoS</span>
+</div>
+<div class="flex flex-col items-center justify-center text-secondary">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="text-[10px] font-label-md uppercase">Menu</span>
+</div>
+<div class="flex flex-col items-center justify-center text-secondary">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] font-label-md uppercase">Stats</span>
+</div>
+</footer>
+<!-- Print Modal Overlay -->
+<div class="fixed inset-0 bg-black/60 z-[100] hidden items-center justify-center p-md backdrop-blur-sm" id="print-overlay">
+<div class="bg-white text-black p-lg w-full max-w-sm rounded-lg shadow-2xl relative overflow-hidden receipt-print">
+<div class="border-b-2 border-dashed border-gray-300 pb-4 text-center">
+<h3 class="text-2xl font-bold uppercase tracking-widest text-primary">Canteena</h3>
+<p class="text-xs text-gray-500">Order #8829 | 12 Oct 2023</p>
+</div>
+<div class="py-4 space-y-2 font-label-md" id="receipt-body">
+<!-- Injected via JS -->
+</div>
+<div class="border-t-2 border-dashed border-gray-300 pt-4">
+<div class="flex justify-between font-bold text-lg">
+<span>TOTAL PAID</span>
+<span id="receipt-total">$0.00</span>
+</div>
+<p class="text-center text-[10px] mt-6 text-gray-400">THANK YOU FOR EATING AT CANTEENA</p>
+</div>
+<button class="mt-lg w-full bg-on-background text-on-primary py-2 rounded-lg font-bold" onclick="closePrint()">CLOSE RECEIPT</button>
+</div>
+</div>
+<script>
+        const products = [
+            { id: 1, name: "Spicy Beef Bowl", price: 12.50, cat: "meals", imgAlt: "A gourmet rice bowl topped with thin slices of marinated spicy beef, vibrant green scallions, and a soft-boiled egg. The dish is presented on a minimalist ceramic plate with warm, ambient restaurant lighting emphasizing the rich textures and deep red colors of the sauce." },
+            { id: 2, name: "Classic Cheeseburger", price: 9.99, cat: "meals", imgAlt: "A juicy double-patty cheeseburger with melting cheddar, crisp lettuce, and heirloom tomatoes on a toasted brioche bun. The shot is high-contrast, professional food photography with a shallow depth of field, highlighting the glistening quality of the fresh ingredients." },
+            { id: 3, name: "Avocado Chicken Salad", price: 11.00, cat: "meals", imgAlt: "A fresh, healthy salad featuring grilled chicken breast, perfectly ripe avocado slices, cherry tomatoes, and mixed greens. The lighting is bright and airy, reflecting a morning cafeteria feel with high-key whites and vibrant greens." },
+            { id: 4, name: "Iced Caramel Latte", price: 4.50, cat: "drinks", imgAlt: "A tall glass of iced caramel latte with visible swirls of milk and dark espresso, topped with a drizzle of golden caramel sauce. The aesthetic is clean-stack, featuring crisp ice cubes and a modern, high-end cafe backdrop." },
+            { id: 5, name: "Crispy Potato Wedges", price: 5.00, cat: "snacks", imgAlt: "A bowl of golden-brown crispy potato wedges seasoned with smoked paprika and sea salt, served with a side of creamy herb dip. The visual style is tactile and warm, emphasizing the crunchy texture of the food." },
+            { id: 6, name: "Chocolate Lava Cake", price: 6.50, cat: "desserts", imgAlt: "A decadent molten chocolate lava cake with a rich dark center oozing out, dusted with fine powdered sugar and garnished with a single red raspberry. The lighting is moody and sophisticated, highlighting the deep browns and velvet textures." },
+            { id: 7, name: "Green Detox Smoothie", price: 5.50, cat: "drinks", imgAlt: "A vibrant green smoothie in a glass bottle, containing spinach, green apple, and ginger. The photography style is fresh and professional, showcasing the natural brightness of the drink against a white minimalist surface." },
+            { id: 8, name: "Veggie Spring Rolls", price: 4.00, cat: "snacks", imgAlt: "Golden fried vegetable spring rolls stacked on a slate platter, served with a sweet chili dipping sauce. The image has a crisp, professional commercial quality with warm backlighting and vibrant orange and brown tones." }
+        ];
+
+        let cart = [];
+        let paymentMethod = 'standard';
+
+        function renderProducts(filter = 'all') {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+            
+            const filtered = filter === 'all' ? products : products.filter(p => p.cat === filter);
+            
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/20 hover:shadow-md transition-all active:scale-95 cursor-pointer group flex flex-col h-full";
+                card.onclick = () => addToCart(p.id);
+                card.innerHTML = `
+                    <div class="relative h-32 w-full overflow-hidden">
+                        <img src="placeholder" data-alt="${p.imgAlt}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-primary/90 text-on-primary text-[10px] font-bold px-2 py-1 rounded-full">$${p.price.toFixed(2)}</div>
+                    </div>
+                    <div class="p-3 flex-1 flex flex-col justify-between">
+                        <h3 class="font-title-lg text-sm leading-tight mb-1 text-on-surface line-clamp-2">${p.name}</h3>
+                        <div class="flex items-center justify-between mt-2">
+                             <span class="text-[10px] font-label-md uppercase text-secondary tracking-widest">${p.cat}</span>
+                             <span class="material-symbols-outlined text-primary text-xl">add_circle</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existing = cart.find(item => item.id === productId);
+            
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartList = document.getElementById('cart-items');
+            if (cart.length === 0) {
+                cartList.innerHTML = `<div class="flex flex-col items-center justify-center h-full text-on-surface-variant/50 gap-sm">
+                    <span class="material-symbols-outlined text-4xl">inventory_2</span>
+                    <p class="font-body-md italic">No items added yet</p>
+                </div>`;
+            } else {
+                cartList.innerHTML = cart.map(item => `
+                    <div class="bg-surface-container-lowest p-3 rounded-lg flex items-center gap-3 border border-outline-variant/10 cart-item-enter">
+                        <div class="w-12 h-12 rounded bg-surface-container-high overflow-hidden shrink-0">
+                            <img src="placeholder" data-alt="Food thumbnail" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-body-md text-sm font-bold truncate text-on-surface">${item.name}</h4>
+                            <p class="font-label-md text-primary">$${item.price.toFixed(2)}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="changeQty(${item.id}, -1)" class="w-6 h-6 rounded-full bg-secondary-container flex items-center justify-center">-</button>
+                            <span class="font-label-md w-4 text-center">${item.qty}</span>
+                            <button onclick="changeQty(${item.id}, 1)" class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">+</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            calculateTotals();
+        }
+
+        function changeQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+            item.qty += delta;
+            if (item.qty <= 0) {
+                cart = cart.filter(i => i.id !== id);
+            }
+            updateCartUI();
+        }
+
+        function calculateTotals() {
+            const sub = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+            const tax = sub * 0.05;
+            const total = sub + tax;
+
+            document.getElementById('subtotal').innerText = `$${sub.toFixed(2)}`;
+            document.getElementById('tax').innerText = `$${tax.toFixed(2)}`;
+            document.getElementById('total').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function togglePayment(method) {
+            paymentMethod = method;
+            const btnStandard = document.getElementById('btn-pay-standard');
+            const btnCoupon = document.getElementById('btn-pay-coupon');
+            const couponSection = document.getElementById('coupon-section');
+
+            if (method === 'coupon') {
+                btnCoupon.className = "flex-1 py-2 text-sm font-bold rounded-md bg-surface-container-lowest text-primary shadow-sm transition-all";
+                btnStandard.className = "flex-1 py-2 text-sm font-bold rounded-md text-on-secondary-container transition-all";
+                couponSection.classList.remove('hidden');
+            } else {
+                btnStandard.className = "flex-1 py-2 text-sm font-bold rounded-md bg-surface-container-lowest text-primary shadow-sm transition-all";
+                btnCoupon.className = "flex-1 py-2 text-sm font-bold rounded-md text-on-secondary-container transition-all";
+                couponSection.classList.add('hidden');
+            }
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCartUI();
+        }
+
+        function filterCategory(cat) {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('bg-primary-container', 'text-on-primary-container');
+                btn.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+            });
+            event.target.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+            event.target.classList.add('bg-primary-container', 'text-on-primary-container');
+            renderProducts(cat);
+        }
+
+        function placeOrder() {
+            if (cart.length === 0) {
+                alert("Cart is empty!");
+                return;
+            }
+
+            const receiptBody = document.getElementById('receipt-body');
+            receiptBody.innerHTML = cart.map(item => `
+                <div class="flex justify-between">
+                    <span>${item.qty}x ${item.name}</span>
+                    <span>$${(item.price * item.qty).toFixed(2)}</span>
+                </div>
+            `).join('');
+
+            const total = document.getElementById('total').innerText;
+            document.getElementById('receipt-total').innerText = total;
+
+            document.getElementById('print-overlay').classList.remove('hidden');
+            document.getElementById('print-overlay').classList.add('flex');
+        }
+
+        function closePrint() {
+            document.getElementById('print-overlay').classList.add('hidden');
+            document.getElementById('print-overlay').classList.remove('flex');
+            clearCart();
+        }
+
+        // Init
+        renderProducts();
+    </script>
+</body></html>

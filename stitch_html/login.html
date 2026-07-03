@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Canteena Admin - Login</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#e2e2e5",
+                    "on-secondary-fixed-variant": "#454749",
+                    "on-error-container": "#93000a",
+                    "surface-container": "#e5eeff",
+                    "on-secondary": "#ffffff",
+                    "primary-container": "#ff5f40",
+                    "error": "#ba1a1a",
+                    "on-primary-container": "#5f0a00",
+                    "surface-container-low": "#eff4ff",
+                    "primary-fixed": "#ffdad3",
+                    "secondary-container": "#e2e2e5",
+                    "tertiary-container": "#768cff",
+                    "tertiary": "#2e4edc",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#ffb4a5",
+                    "on-primary-fixed-variant": "#8e1500",
+                    "on-tertiary-fixed": "#001159",
+                    "on-primary-fixed": "#3e0400",
+                    "outline-variant": "#e3beb7",
+                    "surface-bright": "#f8f9ff",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-tint": "#b3290f",
+                    "on-secondary-fixed": "#1a1c1e",
+                    "tertiary-fixed": "#dee1ff",
+                    "surface-variant": "#d3e4fe",
+                    "outline": "#8e706a",
+                    "background": "#f8f9ff",
+                    "primary": "#b3290f",
+                    "on-background": "#0b1c30",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#ffb4a5",
+                    "on-surface": "#0b1c30",
+                    "on-tertiary-container": "#001f85",
+                    "on-surface-variant": "#5a413b",
+                    "secondary": "#5d5e61",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#213145",
+                    "on-tertiary-fixed-variant": "#0031c4",
+                    "secondary-fixed-dim": "#c6c6c9",
+                    "tertiary-fixed-dim": "#bac3ff",
+                    "surface-dim": "#cbdbf5",
+                    "surface": "#f8f9ff",
+                    "on-secondary-container": "#636467",
+                    "inverse-on-surface": "#eaf1ff",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#dce9ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "container-padding": "16px",
+                    "xl": "32px",
+                    "gutter": "12px",
+                    "base": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Hanken Grotesk"],
+                    "label-md": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "title-lg": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .login-card {
+            box-shadow: 0 4px 12px rgba(179, 41, 15, 0.12);
+        }
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #ff5f40;
+        }
+        .tactile-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen flex flex-col font-body-md text-on-background">
+<!-- Top Glow Effect -->
+<div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-primary-container to-primary z-[60]"></div>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col items-center justify-center px-container-padding py-xl">
+<!-- Logo Section -->
+<div class="mb-lg flex flex-col items-center space-y-sm">
+<div class="w-16 h-16 bg-primary-container rounded-xl flex items-center justify-center shadow-lg transform rotate-3">
+<span class="material-symbols-outlined text-on-primary-container text-[40px]" data-icon="restaurant">restaurant</span>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Canteena</h1>
+</div>
+<!-- Login Card -->
+<div class="w-full max-w-md bg-surface-container-lowest p-lg rounded-xl login-card border border-outline-variant/30">
+<header class="mb-md">
+<h2 class="font-headline-md text-headline-md text-on-surface">Welcome Back</h2>
+<p class="font-body-md text-on-surface-variant mt-xs">Access the Canteena administration panel</p>
+</header>
+<form class="space-y-md" onsubmit="event.preventDefault();">
+<!-- Admin Email -->
+<div class="space-y-base">
+<label class="font-label-md text-label-md text-on-surface-variant ml-xs" for="email">Admin Email</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">alternate_email</span>
+<input class="w-full h-12 bg-[#F1F5F9] rounded-lg pl-xl pr-md text-body-lg font-body-lg border-transparent transition-all focus:bg-white" id="email" placeholder="admin@canteena.com" type="email"/>
+</div>
+</div>
+<!-- Password -->
+<div class="space-y-base">
+<div class="flex justify-between items-center ml-xs">
+<label class="font-label-md text-label-md text-on-surface-variant" for="password">Password</label>
+<a class="font-label-md text-label-md text-primary hover:underline transition-all" href="#">Forgot Password?</a>
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">lock</span>
+<input class="w-full h-12 bg-[#F1F5F9] rounded-lg pl-xl pr-md text-body-lg font-body-lg border-transparent transition-all focus:bg-white" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember Me (Bonus for UX) -->
+<div class="flex items-center space-x-sm pt-xs">
+<input class="w-5 h-5 rounded text-primary focus:ring-primary-container border-outline-variant bg-[#F1F5F9]" id="remember" type="checkbox"/>
+<label class="font-body-md text-on-surface-variant" for="remember">Keep me logged in for 30 days</label>
+</div>
+<!-- Sign In Button -->
+<button class="w-full h-14 bg-primary text-on-primary font-headline-sm text-headline-sm rounded-xl tactile-btn shadow-md hover:bg-primary/90 transition-all active:shadow-sm mt-md flex items-center justify-center space-x-sm">
+<span>Sign In</span>
+<span class="material-symbols-outlined">login</span>
+</button>
+</form>
+<!-- Social/Integration Divider -->
+<div class="relative my-lg">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-outline-variant/30"></div>
+</div>
+<div class="relative flex justify-center text-label-md uppercase">
+<span class="bg-surface-container-lowest px-md text-on-surface-variant/60 font-label-md">Secure Admin Access</span>
+</div>
+</div>
+<!-- SSO Option -->
+<button class="w-full h-12 border border-outline-variant bg-white text-on-surface-variant font-title-lg text-title-lg rounded-lg tactile-btn flex items-center justify-center space-x-sm hover:bg-surface-container-low transition-colors">
+<div class="w-5 h-5 bg-surface-variant rounded-full overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">corporate_fare</span>
+</div>
+<span>SSO Enterprise Login</span>
+</button>
+</div>
+<!-- Simple 'Powered By' -->
+<footer class="mt-xl text-center">
+<div class="flex flex-col items-center space-y-sm">
+<div class="font-label-md text-label-md text-on-surface-variant/60 tracking-widest uppercase">
+                    Powered by <span class="text-primary/70 font-bold">Canteena OS</span>
+</div>
+<div class="flex space-x-md text-on-surface-variant/40">
+<a class="text-[10px] hover:text-primary transition-colors" href="#">Security Audit 2024</a>
+<a class="text-[10px] hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-[10px] hover:text-primary transition-colors" href="#">System Status</a>
+</div>
+</div>
+</footer>
+</main>
+<!-- Interactive Layer -->
+<script>
+        // Simple micro-interaction for button and input feedback
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.parentElement.classList.add('scale-[1.01]');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.parentElement.classList.remove('scale-[1.01]');
+            });
+        });
+        
+        // Add smooth transition classes
+        document.querySelectorAll('.tactile-btn, input').forEach(el => {
+            el.classList.add('duration-200');
+        });
+    </script>
+</body></html>

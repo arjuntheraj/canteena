@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Canteena Sales Reports</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline": "#8e706a",
+                    "surface-variant": "#d3e4fe",
+                    "primary": "#b3290f",
+                    "on-background": "#0b1c30",
+                    "background": "#f8f9ff",
+                    "on-surface": "#0b1c30",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#ffb4a5",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#b3290f",
+                    "tertiary-fixed": "#dee1ff",
+                    "on-secondary-fixed": "#1a1c1e",
+                    "secondary-fixed-dim": "#c6c6c9",
+                    "surface": "#f8f9ff",
+                    "tertiary-fixed-dim": "#bac3ff",
+                    "surface-dim": "#cbdbf5",
+                    "surface-container-high": "#dce9ff",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-secondary-container": "#636467",
+                    "on-tertiary-container": "#001f85",
+                    "on-surface-variant": "#5a413b",
+                    "secondary": "#5d5e61",
+                    "on-tertiary-fixed-variant": "#0031c4",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#213145",
+                    "surface-container-low": "#eff4ff",
+                    "primary-fixed": "#ffdad3",
+                    "on-primary-container": "#5f0a00",
+                    "secondary-container": "#e2e2e5",
+                    "tertiary": "#2e4edc",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-container": "#768cff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#454749",
+                    "secondary-fixed": "#e2e2e5",
+                    "surface-container": "#e5eeff",
+                    "primary-container": "#ff5f40",
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#e3beb7",
+                    "surface-bright": "#f8f9ff",
+                    "on-primary-fixed-variant": "#8e1500",
+                    "primary-fixed-dim": "#ffb4a5",
+                    "on-tertiary-fixed": "#001159",
+                    "on-primary-fixed": "#3e0400"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "container-padding": "16px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "xl": "32px",
+                    "gutter": "12px",
+                    "base": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "headline-sm": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "label-md": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "title-lg": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .chart-bar {
+            transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-font-adjust {
+                font-family: 'Hanken Grotesk' !important;
+                font-size: 28px !important;
+                line-height: 36px !important;
+                font-weight: 700 !important;
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-dim shadow-sm flex items-center justify-between px-container-padding h-16 w-full">
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-primary dark:text-inverse-primary hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 duration-150">
+                menu
+            </button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Canteena Admin</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high transition-colors p-2 rounded-full">search</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container text-xs font-bold overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate operations manager in their late 30s, wearing business casual attire. The lighting is soft and flattering, typical of a high-end office environment. The overall aesthetic is clean, modern, and trustworthy, with a soft-focus office background in muted blues and greys to match the Canteena brand palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuGwAY9KSwNRVXnctYhJYWbdF2AL9bBTgqUqGxUv6jQ4Rpt7syQdJKFSe2L_3uaGfR3YltVMKPf5_V9bqSRsTux4Vwmk-2PhRNaX889JAaKun5HA4IF_AR8HYApFKPjFLNHvYW_IMrIzFUcA2YTXHAxfXCvAwRKG3F2Aa8ERQhTNcyR106gXXg1iCSvYktXneD3ugsx_F2wPdmYrqdXZ4rU_xXkbAH1cUSS74TL9COgQ5oPuKGNhcW7A"/>
+</div>
+</div>
+</header>
+<main class="pt-20 px-container-padding max-w-7xl mx-auto">
+<!-- Header & Action Row -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-lg">
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-display-lg md:text-display-lg text-on-surface tracking-tight">Sales Reports</h2>
+<p class="text-on-surface-variant font-body-lg">Comprehensive overview of operational performance</p>
+</div>
+<div class="flex items-center gap-sm">
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container-high rounded-lg text-primary font-bold hover:bg-primary-fixed transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+<span class="font-label-md text-label-md uppercase">PDF</span>
+</button>
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container-high rounded-lg text-primary font-bold hover:bg-primary-fixed transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[18px]">csv</span>
+<span class="font-label-md text-label-md uppercase">CSV</span>
+</button>
+</div>
+</div>
+<!-- Date Range Picker -->
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-[0_4px_12px_rgba(179,41,15,0.06)] mb-lg overflow-x-auto hide-scrollbar">
+<div class="flex items-center gap-sm min-w-max">
+<button class="px-lg py-sm rounded-full bg-primary text-on-primary font-bold shadow-sm transition-all">Daily</button>
+<button class="px-lg py-sm rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-all">Weekly</button>
+<button class="px-lg py-sm rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-all">Monthly</button>
+<div class="h-8 w-[1px] bg-outline-variant mx-sm"></div>
+<button class="flex items-center gap-sm px-lg py-sm rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>Oct 24, 2023 - Oct 31, 2023</span>
+</button>
+</div>
+</div>
+<!-- KPI Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md mb-lg">
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-sm border-b-4 border-primary">
+<p class="text-on-surface-variant font-label-md uppercase tracking-wider mb-xs">Total Gross Sales</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">$124,592.00</h3>
+<div class="flex items-center gap-xs text-green-600 mt-sm">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span class="text-xs font-bold">+12.5% vs last period</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-sm border-b-4 border-tertiary">
+<p class="text-on-surface-variant font-label-md uppercase tracking-wider mb-xs">Cash Transactions</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">$48,210.50</h3>
+<p class="text-on-surface-variant text-xs mt-sm">38.7% of total volume</p>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-sm border-b-4 border-primary-container">
+<p class="text-on-surface-variant font-label-md uppercase tracking-wider mb-xs">Coupon Redeemed</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">$76,381.50</h3>
+<p class="text-on-surface-variant text-xs mt-sm">61.3% of total volume</p>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-sm border-b-4 border-secondary">
+<p class="text-on-surface-variant font-label-md uppercase tracking-wider mb-xs">Active Terminals</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">42 Units</h3>
+<p class="text-on-surface-variant text-xs mt-sm">98% uptime across fleet</p>
+</div>
+</div>
+<!-- Comparison Chart Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg mb-lg">
+<!-- Main Chart -->
+<div class="lg:col-span-2 bg-surface-container-lowest p-lg rounded-xl shadow-sm min-h-[400px] flex flex-col">
+<div class="flex items-center justify-between mb-lg">
+<h4 class="font-title-lg text-title-lg">Cash vs Coupon Comparison</h4>
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-xs">
+<span class="w-3 h-3 rounded-full bg-tertiary"></span>
+<span class="text-xs font-label-md">CASH</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="w-3 h-3 rounded-full bg-primary-container"></span>
+<span class="text-xs font-label-md">COUPON</span>
+</div>
+</div>
+</div>
+<div class="flex-grow flex items-end justify-between gap-sm px-md pb-md border-b border-outline-variant/30">
+<!-- Dummy Chart Bars -->
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="flex items-end gap-1 w-full justify-center">
+<div class="chart-bar w-4 bg-tertiary rounded-t-sm" style="height: 120px;"></div>
+<div class="chart-bar w-4 bg-primary-container rounded-t-sm" style="height: 180px;"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-label-md">MON</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="flex items-end gap-1 w-full justify-center">
+<div class="chart-bar w-4 bg-tertiary rounded-t-sm" style="height: 140px;"></div>
+<div class="chart-bar w-4 bg-primary-container rounded-t-sm" style="height: 160px;"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-label-md">TUE</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="flex items-end gap-1 w-full justify-center">
+<div class="chart-bar w-4 bg-tertiary rounded-t-sm" style="height: 90px;"></div>
+<div class="chart-bar w-4 bg-primary-container rounded-t-sm" style="height: 210px;"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-label-md">WED</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="flex items-end gap-1 w-full justify-center">
+<div class="chart-bar w-4 bg-tertiary rounded-t-sm" style="height: 160px;"></div>
+<div class="chart-bar w-4 bg-primary-container rounded-t-sm" style="height: 140px;"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-label-md">THU</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="flex items-end gap-1 w-full justify-center">
+<div class="chart-bar w-4 bg-tertiary rounded-t-sm" style="height: 200px;"></div>
+<div class="chart-bar w-4 bg-primary-container rounded-t-sm" style="height: 240px;"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-label-md">FRI</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="flex items-end gap-1 w-full justify-center">
+<div class="chart-bar w-4 bg-tertiary rounded-t-sm" style="height: 60px;"></div>
+<div class="chart-bar w-4 bg-primary-container rounded-t-sm" style="height: 80px;"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-label-md">SAT</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="flex items-end gap-1 w-full justify-center">
+<div class="chart-bar w-4 bg-tertiary rounded-t-sm" style="height: 40px;"></div>
+<div class="chart-bar w-4 bg-primary-container rounded-t-sm" style="height: 50px;"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-label-md">SUN</span>
+</div>
+</div>
+</div>
+<!-- Top Performing Companies -->
+<div class="bg-primary text-on-primary p-lg rounded-xl shadow-xl flex flex-col relative overflow-hidden group">
+<!-- Abstract visual element -->
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-primary-container/20 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700"></div>
+<h4 class="font-title-lg text-title-lg mb-lg relative z-10">Top Companies</h4>
+<div class="space-y-md relative z-10">
+<div class="flex items-center justify-between p-sm bg-white/10 rounded-lg backdrop-blur-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-white/20 flex items-center justify-center font-bold">A</div>
+<span class="font-body-lg">Acme Corp</span>
+</div>
+<span class="font-label-md">$12,402</span>
+</div>
+<div class="flex items-center justify-between p-sm bg-white/10 rounded-lg backdrop-blur-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-white/20 flex items-center justify-center font-bold">G</div>
+<span class="font-body-lg">GlobalTech</span>
+</div>
+<span class="font-label-md">$10,890</span>
+</div>
+<div class="flex items-center justify-between p-sm bg-white/10 rounded-lg backdrop-blur-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-white/20 flex items-center justify-center font-bold">N</div>
+<span class="font-body-lg">NexGen Inc</span>
+</div>
+<span class="font-label-md">$9,550</span>
+</div>
+<div class="flex items-center justify-between p-sm bg-white/10 rounded-lg backdrop-blur-md">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-white/20 flex items-center justify-center font-bold">B</div>
+<span class="font-body-lg">BuildBase</span>
+</div>
+<span class="font-label-md">$8,211</span>
+</div>
+</div>
+<button class="mt-auto w-full py-sm bg-on-primary text-primary font-bold rounded-lg hover:bg-primary-fixed transition-colors">
+                    View All 124 Partners
+                </button>
+</div>
+</div>
+<!-- Detailed Table -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden mb-lg">
+<div class="p-md border-b border-outline-variant/30 flex items-center justify-between">
+<h4 class="font-title-lg text-title-lg">Detailed Breakdown</h4>
+<div class="relative">
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-sm focus:ring-2 focus:ring-primary w-64" placeholder="Search companies..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant uppercase font-label-md text-[10px] tracking-widest">
+<th class="px-md py-sm">Company Name</th>
+<th class="px-md py-sm">Transactions</th>
+<th class="px-md py-sm">Cash Total</th>
+<th class="px-md py-sm">Coupon Total</th>
+<th class="px-md py-sm">Gross Sales</th>
+<th class="px-md py-sm">Growth</th>
+<th class="px-md py-sm text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-md py-md font-bold text-on-surface">Acme Corp HQ</td>
+<td class="px-md py-md">1,242</td>
+<td class="px-md py-md font-label-md">$4,200.00</td>
+<td class="px-md py-md font-label-md">$8,202.50</td>
+<td class="px-md py-md font-bold text-primary">$12,402.50</td>
+<td class="px-md py-md">
+<span class="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold">+14%</span>
+</td>
+<td class="px-md py-md text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-md py-md font-bold text-on-surface">GlobalTech Systems</td>
+<td class="px-md py-md">954</td>
+<td class="px-md py-md font-label-md">$3,100.00</td>
+<td class="px-md py-md font-label-md">$7,790.20</td>
+<td class="px-md py-md font-bold text-primary">$10,890.20</td>
+<td class="px-md py-md">
+<span class="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold">+8%</span>
+</td>
+<td class="px-md py-md text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-md py-md font-bold text-on-surface">NexGen Innovation</td>
+<td class="px-md py-md">842</td>
+<td class="px-md py-md font-label-md">$2,800.00</td>
+<td class="px-md py-md font-label-md">$6,750.00</td>
+<td class="px-md py-md font-bold text-primary">$9,550.00</td>
+<td class="px-md py-md">
+<span class="px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-[10px] font-bold">-2%</span>
+</td>
+<td class="px-md py-md text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-md py-md font-bold text-on-surface">BuildBase Logistics</td>
+<td class="px-md py-md">731</td>
+<td class="px-md py-md font-label-md">$2,211.40</td>
+<td class="px-md py-md font-label-md">$6,000.00</td>
+<td class="px-md py-md font-bold text-primary">$8,211.40</td>
+<td class="px-md py-md">
+<span class="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold">+21%</span>
+</td>
+<td class="px-md py-md text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-md bg-surface-container-low flex items-center justify-between">
+<span class="text-xs text-on-surface-variant">Showing 1-10 of 124 companies</span>
+<div class="flex items-center gap-xs">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white transition-colors material-symbols-outlined text-[20px]">chevron_left</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-on-primary font-bold text-xs">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white transition-colors text-xs">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white transition-colors text-xs">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white transition-colors material-symbols-outlined text-[20px]">chevron_right</button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md flex justify-around items-center h-16 px-2 pb-safe w-full border-t border-outline-variant/30 shadow-[0_-4px_12px_rgba(179,41,15,0.08)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-variant/50 p-2 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-variant/50 p-2 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-label-md text-label-md">Menu</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-variant/50 p-2 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">corporate_fare</span>
+<span class="font-label-md text-label-md">Enroll</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-variant/50 p-2 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-label-md text-label-md">PoS</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+</nav>
+<!-- Simple Interactivity -->
+<script>
+        document.querySelectorAll('.chart-bar').forEach(bar => {
+            const originalHeight = bar.style.height;
+            bar.style.height = '0px';
+            setTimeout(() => {
+                bar.style.height = originalHeight;
+            }, 300);
+        });
+
+        // Hover effect for table rows
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.classList.add('shadow-inner');
+            });
+            row.addEventListener('mouseleave', () => {
+                row.classList.remove('shadow-inner');
+            });
+        });
+    </script>
+</body></html>

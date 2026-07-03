@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Canteena Menu Management</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline": "#8e706a",
+                    "surface-variant": "#d3e4fe",
+                    "primary": "#b3290f",
+                    "on-background": "#0b1c30",
+                    "background": "#f8f9ff",
+                    "on-surface": "#0b1c30",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#ffb4a5",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#b3290f",
+                    "tertiary-fixed": "#dee1ff",
+                    "on-secondary-fixed": "#1a1c1e",
+                    "secondary-fixed-dim": "#c6c6c9",
+                    "surface": "#f8f9ff",
+                    "tertiary-fixed-dim": "#bac3ff",
+                    "surface-dim": "#cbdbf5",
+                    "surface-container-high": "#dce9ff",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-secondary-container": "#636467",
+                    "on-tertiary-container": "#001f85",
+                    "on-surface-variant": "#5a413b",
+                    "secondary": "#5d5e61",
+                    "on-tertiary-fixed-variant": "#0031c4",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#213145",
+                    "surface-container-low": "#eff4ff",
+                    "primary-fixed": "#ffdad3",
+                    "on-primary-container": "#5f0a00",
+                    "secondary-container": "#e2e2e5",
+                    "tertiary": "#2e4edc",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-container": "#768cff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#454749",
+                    "secondary-fixed": "#e2e2e5",
+                    "surface-container": "#e5eeff",
+                    "primary-container": "#ff5f40",
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#e3beb7",
+                    "surface-bright": "#f8f9ff",
+                    "on-primary-fixed-variant": "#8e1500",
+                    "primary-fixed-dim": "#ffb4a5",
+                    "on-tertiary-fixed": "#001159",
+                    "on-primary-fixed": "#3e0400"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "container-padding": "16px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "xl": "32px",
+                    "gutter": "12px",
+                    "base": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "headline-sm": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "label-md": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "title-lg": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Hanken Grotesk', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e3beb7; border-radius: 10px; }
+        
+        /* Tactical elevation transitions */
+        .card-press:active { transform: scale(0.98); box-shadow: 0 2px 4px rgba(179,41,15,0.04); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-dim shadow-sm flex items-center justify-between px-container-padding h-16 w-full">
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-primary dark:text-inverse-primary hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 duration-150" data-icon="menu">menu</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Canteena Admin</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-primary-fixed flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="Close-up professional portrait of a confident operations manager with a friendly smile, set against a clean, modern corporate office background with soft bokeh lighting and warm tones reflecting the Canteena brand colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKE6vNcLzfCpTS9lBDFSq4X6AcQzFL9pqx9qER_5LOcOu6nYk6XtfwSRtBonyJe6-8rqmcBnVbMq1WMg3aUXZ0OdS_-BJRKETLkr3grC70zBk1F9T9wDdYk9CS0cuHU1IuKUT07c117tnu6vRYSJLKMcYd_33RR3sdrdx1TztmqWgrtzKNRAA3jA5tkRWpNNwklHqs_Bq3smtdBZQQ7224fadf5NtZwG0_5TYL95mO6_nvCwQK_FlyiA"/>
+</div>
+</header>
+<main class="pt-20 px-container-padding max-w-2xl mx-auto">
+<!-- Search & Filter Section -->
+<section class="mt-lg mb-xl">
+<div class="relative group">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="w-full h-14 pl-12 pr-4 bg-[#F1F5F9] border-none rounded-xl font-body-lg text-body-lg focus:ring-2 focus:ring-primary focus:bg-white transition-all shadow-sm" placeholder="Search menu items..." type="text"/>
+</div>
+<div class="flex gap-sm mt-md overflow-x-auto pb-xs custom-scrollbar">
+<button class="px-md py-xs bg-primary text-on-primary rounded-full font-label-md text-label-md whitespace-nowrap">All Items</button>
+<button class="px-md py-xs bg-surface-container-low text-on-surface-variant hover:bg-surface-variant/50 rounded-full font-label-md text-label-md whitespace-nowrap transition-colors">Entrees</button>
+<button class="px-md py-xs bg-surface-container-low text-on-surface-variant hover:bg-surface-variant/50 rounded-full font-label-md text-label-md whitespace-nowrap transition-colors">Sides</button>
+<button class="px-md py-xs bg-surface-container-low text-on-surface-variant hover:bg-surface-variant/50 rounded-full font-label-md text-label-md whitespace-nowrap transition-colors">Beverages</button>
+<button class="px-md py-xs bg-surface-container-low text-on-surface-variant hover:bg-surface-variant/50 rounded-full font-label-md text-label-md whitespace-nowrap transition-colors">Desserts</button>
+</div>
+</section>
+<!-- Menu List -->
+<div class="space-y-md">
+<!-- Item Card 1 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0_4px_12px_rgba(179,41,15,0.06)] flex items-center gap-md border border-transparent hover:border-outline-variant/20 transition-all card-press">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A gourmet artisan burger served on a brioche bun with melting aged cheddar, crispy bacon, and fresh heirloom tomato, captured with dramatic food photography lighting against a dark slate background, high contrast and vibrant food textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzKI1FsaG_RAaISbGi4_32ogfkPwP0ZtDYazjm3Q8vJ4LILh_8dA-KF91RrWTPVshzPE4XjiVMlp-2l5G4elmtRsuxOtg7J3NqS0_p-fbrtouPnUw5jI4_U6qBvIB8QS0dipKBGWu-L4-Dqa9qgFE4h3Ne7D82IrQCB_O-1XF1vq1sUkLOFCdrHVyz8aCLsH8Y91cWrigtkx-mgGy_yoSYgTXwtnkiExc4LdfK0Qb1tBCD3t7g8WW7QA"/>
+</div>
+<div class="flex-grow flex flex-col gap-xs">
+<div class="flex justify-between items-start">
+<h3 class="font-title-lg text-title-lg text-on-surface">Signature Wagyu Burger</h3>
+<span class="font-label-md text-label-md text-primary font-bold">$18.50</span>
+</div>
+<span class="font-label-md text-label-md bg-tertiary-fixed text-on-tertiary-fixed-variant px-sm py-[2px] rounded-full w-fit uppercase">Entree</span>
+<p class="font-body-md text-body-md text-secondary line-clamp-1">Caramelized onions, truffle aioli...</p>
+</div>
+<div class="flex flex-col gap-xs">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors p-1" data-icon="edit">edit</button>
+<button class="material-symbols-outlined text-outline hover:text-error transition-colors p-1" data-icon="delete">delete</button>
+</div>
+</div>
+<!-- Item Card 2 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0_4px_12px_rgba(179,41,15,0.06)] flex items-center gap-md border border-transparent hover:border-outline-variant/20 transition-all card-press">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A vibrant Mediterranean quinoa bowl with roasted chickpeas, cucumber, olives, and a dollop of bright green pesto, captured from a top-down angle on a white ceramic plate, bright natural lighting, professional healthy food commercial style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKNalHwxmAUBYKLlwNuh5aa3XUyYN6IrUGcAP33Sdm86rukLSnyviwyvZR0ONYobNuGpRzETBagDM4wLHKbWEtY0jLHrgp18_5yk9OSOa5G4neVYIEG0y8Gn993GQGPj-q6tZm4CFnMV_Fslj5fw_azh-SjJlzFqM-s2A7EkryZ0X4fDfYvgpQ_wpXpqKa3r5FzlbHVmHnl7Czdu808cAVvUHfA-PW61WdajrR12nADvlAG3sB9i3M9g"/>
+</div>
+<div class="flex-grow flex flex-col gap-xs">
+<div class="flex justify-between items-start">
+<h3 class="font-title-lg text-title-lg text-on-surface">Garden Quinoa Bowl</h3>
+<span class="font-label-md text-label-md text-primary font-bold">$14.00</span>
+</div>
+<span class="font-label-md text-label-md bg-tertiary-fixed text-on-tertiary-fixed-variant px-sm py-[2px] rounded-full w-fit uppercase">Entree</span>
+<p class="font-body-md text-body-md text-secondary line-clamp-1">Fresh avocado, lime, kale...</p>
+</div>
+<div class="flex flex-col gap-xs">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors p-1" data-icon="edit">edit</button>
+<button class="material-symbols-outlined text-outline hover:text-error transition-colors p-1" data-icon="delete">delete</button>
+</div>
+</div>
+<!-- Item Card 3 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0_4px_12px_rgba(179,41,15,0.06)] flex items-center gap-md border border-transparent hover:border-outline-variant/20 transition-all card-press">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Creamy truffle-infused macaroni and cheese in a small cast-iron skillet, topped with golden-brown breadcrumbs and fresh parsley, macro shot focusing on the gooey cheese texture, warm and inviting hospitality lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyV5HNYSr8xihqHjxwOD5EQQNitshgkRDY5Usc1ivcQyKSwgg4TtbKOOOxBZ7W1ipWH6pn7S_dLoCLG5d33Qzk6VTp9Gu1baOI2aWFdCJhpDHPo-GKR2imvcJOheqnIrxyMnehghL8zdHMCs3QxaI9jHfYa0e1TbUYlp3ak3a9EOvvKIpZ7QsEL_PgyIosZAVVuDJvlFBgGO7nI1Zvkkq7MKmIblqBZj56OZMbwqHdtl-ISo1th_UDMg"/>
+</div>
+<div class="flex-grow flex flex-col gap-xs">
+<div class="flex justify-between items-start">
+<h3 class="font-title-lg text-title-lg text-on-surface">Truffle Mac &amp; Cheese</h3>
+<span class="font-label-md text-label-md text-primary font-bold">$9.75</span>
+</div>
+<span class="font-label-md text-label-md bg-tertiary-fixed text-on-tertiary-fixed-variant px-sm py-[2px] rounded-full w-fit uppercase">Sides</span>
+<p class="font-body-md text-body-md text-secondary line-clamp-1">Three-cheese blend, herb crust...</p>
+</div>
+<div class="flex flex-col gap-xs">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors p-1" data-icon="edit">edit</button>
+<button class="material-symbols-outlined text-outline hover:text-error transition-colors p-1" data-icon="delete">delete</button>
+</div>
+</div>
+<!-- Item Card 4 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0_4px_12px_rgba(179,41,15,0.06)] flex items-center gap-md border border-transparent hover:border-outline-variant/20 transition-all card-press opacity-70">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 grayscale">
+<img class="w-full h-full object-cover" data-alt="A cold, condensation-covered glass bottle of organic elderflower soda with a slice of lemon, set against a blurred sunlit terrace background, bright and refreshing lifestyle photography with high clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNnHliCZ8PK6FsARNl1c2XuOJQzknyTwUu1zbLtQCor5xVdmg196EEdnqb_0JrAhennGeXAWx8kKqpcbMVKUQ0UGEgbWm01NKX3LP3JZa8oV5AVIGFnTXrliMEnEzcrgRKovAy_9LhwJi8J-hmGdyj3WE5gjk-aqDyWcG2sDl0Oj-ju1cos-Iu8YrRUNPzvNGh4P-Fct0GGiiwV-mZmQboRWPBdIn4wjVwGHQzchsmpnUf1bOIgwS0Eg"/>
+</div>
+<div class="flex-grow flex flex-col gap-xs">
+<div class="flex justify-between items-start">
+<h3 class="font-title-lg text-title-lg text-on-surface">Elderflower Soda</h3>
+<span class="font-label-md text-label-md text-primary font-bold">$4.50</span>
+</div>
+<div class="flex items-center gap-sm">
+<span class="font-label-md text-label-md bg-tertiary-fixed text-on-tertiary-fixed-variant px-sm py-[2px] rounded-full uppercase">Beverages</span>
+<span class="font-label-md text-label-md text-error font-bold">OUT OF STOCK</span>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors p-1" data-icon="edit">edit</button>
+<button class="material-symbols-outlined text-outline hover:text-error transition-colors p-1" data-icon="delete">delete</button>
+</div>
+</div>
+<!-- Item Card 5 -->
+<div class="bg-surface-container-lowest p-md rounded-xl shadow-[0_4px_12px_rgba(179,41,15,0.06)] flex items-center gap-md border border-transparent hover:border-outline-variant/20 transition-all card-press">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Decadent dark chocolate fondant with a molten center, dusted with powdered sugar and served with a single raspberry and mint leaf, elegant restaurant plating on a matte black plate, moody low-key lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDY0p7onXiyoaJIAo9wNiu63n2sMzETJzuD3SgkypiPPDOOarFox6wV51inWXJoqy8SLZY8nXPQYX3JvWShhyEvR6_9kHc3jdhXDcQbgrbYt1GzDolegK9OkFz2QP-pCqxAOksKZW8THJYKAYuOal2kHReD3j1mdApYXBEmAu0ai_V6iE8iRF4KVuTK94s4_MEK1MApCdi5WvR9LkXlsi3bx6Eq9CMXvnDMBIJovdQT8cOaz3pwant7Gw"/>
+</div>
+<div class="flex-grow flex flex-col gap-xs">
+<div class="flex justify-between items-start">
+<h3 class="font-title-lg text-title-lg text-on-surface">Lava Cake</h3>
+<span class="font-label-md text-label-md text-primary font-bold">$11.25</span>
+</div>
+<span class="font-label-md text-label-md bg-tertiary-fixed text-on-tertiary-fixed-variant px-sm py-[2px] rounded-full w-fit uppercase">Desserts</span>
+<p class="font-body-md text-body-md text-secondary line-clamp-1">Valrhona dark chocolate, vanilla bean...</p>
+</div>
+<div class="flex flex-col gap-xs">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors p-1" data-icon="edit">edit</button>
+<button class="material-symbols-outlined text-outline hover:text-error transition-colors p-1" data-icon="delete">delete</button>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform duration-200 z-40 group overflow-hidden">
+<div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="material-symbols-outlined text-[32px]">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md border-t border-outline-variant/30 shadow-[0_-4px_12px_rgba(179,41,15,0.08)] flex justify-around items-center h-16 px-2 pb-safe w-full">
+<div class="flex flex-col items-center justify-center text-secondary hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200 p-2 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-label-md text-label-md">Menu</span>
+</div>
+<div class="flex flex-col items-center justify-center text-secondary hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200 p-2 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="corporate_fare">corporate_fare</span>
+<span class="font-label-md text-label-md">Enroll</span>
+</div>
+<div class="flex flex-col items-center justify-center text-secondary hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200 p-2 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="point_of_sale">point_of_sale</span>
+<span class="font-label-md text-label-md">PoS</span>
+</div>
+<div class="flex flex-col items-center justify-center text-secondary hover:bg-surface-variant/50 active:scale-90 transition-transform duration-200 p-2 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-md text-label-md">Reports</span>
+</div>
+</nav>
+<script>
+        // Simple search highlight interaction
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const items = document.querySelectorAll('.card-press');
+            
+            items.forEach(item => {
+                const text = item.querySelector('h3').innerText.toLowerCase();
+                if (text.includes(query)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body></html>
