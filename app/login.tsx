@@ -35,7 +35,7 @@ export default function LoginScreen() {
 
   return (
     <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       className="flex-1 bg-background justify-center items-center px-container-padding py-xl"
     >
       <StatusBar style="dark" />
