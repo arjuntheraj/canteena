@@ -198,7 +198,7 @@ export default function MenuScreen() {
 
       {/* Editor Form Modal */}
       <Modal visible={isEditing} animationType="slide" transparent={true}>
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className="flex-1 justify-end bg-black/50">
+        <KeyboardAvoidingView behavior="padding" className="flex-1 justify-end bg-black/50">
           <View className="bg-surface-container-lowest rounded-t-3xl p-6 pb-12 shadow-xl">
             <View className="flex-row justify-between items-center mb-6">
                <Text className="font-headline-md text-xl font-bold text-on-surface">
